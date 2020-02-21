@@ -1,0 +1,16 @@
+<div class="aside">
+  <ul class="menu">
+    <li class="{{ currentLink === 'user' ? 'active' : ''}}" index="1">
+      <a href="/admin/user">
+        <span class="iconfont">&#xe64d;</span>
+        用户管理
+      </a>
+    </li>
+    <li class="{{ currentLink === 'article' ? 'active' : ''}}">
+      <a href="/admin/article">
+        <span class="iconfont">&#xe64f;</span>
+        文章管理
+      </a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,22 @@
+<div class="header">
+  <div class="logo">观沧海 <i>NodeJs</i></div>
+  <div class="navbar">
+    <li class="nav-item dropdown">
+      <a
+        class="nav-link dropdown-toggle"
+        href="#"
+        id="navbarDropdown"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        {{userInfo && userInfo.username}}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="#">个人资料</a>
+        <a class="dropdown-item" href="/admin/logout">退出</a>
+      </div>
+    </li>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+{{extend './common/layout.art'}}
+
+{{block 'link'}}
+  <link rel="stylesheet" href="/admin/css/login.css" />
+{{/block}}
+
+{{block 'main'}}
+  <div class="container text-center">
+    <form class="form-signin" autocomplete="off" action="/admin/login" method="post" id="loginForm">
+      <img class="mb-4" src="/admin/img/logo.svg" width="50" alt="" />
+      <h1 class="h3 mb-3 font-weight-normal">博客管理员登陆</h1>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Username"
+          name="username"
+          id="username"
+          autofocus
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          name="password"
+          id="password"
+        />
+      </div>
+      <button class="btn btn-primary col-12">登陆</button>
+    </form>
+  </div>
+{{/block}}
+{{block 'script'}}
+  <script>
+    $('form').on('submit', function() {
+      let { username, password } = serialize2Json(this);
+      if (username.trim().length === 0 || password.trim().length === 0) {
+        alert('用户名或密码不正确');
+        return false;
+      }
+
+    })
+  </script>
+{{/block}}

@@ -1,0 +1,121 @@
+{{extend './common/layout.art'}} {{block 'link'}}
+<link rel="stylesheet" href="/admin/css/index.css" />
+{{/block}} {{block 'main'}} {{include './common/header.art'}}
+<div class="content">
+  {{include './common/aside.art'}}
+  <div class="main">
+    <div class="user-title">
+      <div class="user-text">
+        <h1>文章</h1>
+        <p>找到一篇文章</p>
+      </div>
+      <a href="/admin/article-edit" class="btn btn-primary">发布新文章</a>
+    </div>
+    <div class="user-table">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">标题</th>
+            <th scope="col">发布时间</th>
+            <th scope="col">作者</th>
+            <th scope="col">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{each articles.records}}
+          <tr>
+            <th scope="row">{{@$value._id}}</th>
+            <td>{{ $value.title }}</td>
+            <td>{{ dateformat($value.publishDate, 'yyyy-mm-dd') }}</td>
+            <td>{{ $value.author.username }}</td>
+            <td>
+              <a
+                href="/admin/article-edit?id={{@$value._id}}"
+                class="iconfont text-primary"
+                >&#xe60c;</a
+              >
+              <a
+                href="javascript:;"
+                class="iconfont text-danger delete"
+                data-toggle="modal"
+                data-target="#myModal"
+                data-id="{{@$value._id}}"
+                >&#xe621;</a
+              >
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {{if +articles.page - 1 > 0}}
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="/admin/article?offset={{ articles.page - 1 }}"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {{/if}} 
+          {{each articles.display}}
+          <li class="page-item">
+            <a class="page-link" href="/admin/article?offset={{ $value }}"
+              >{{ $value }}</a
+            >
+          </li>
+          {{/each}} 
+          {{if +articles.page < +articles.pages}}
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="/admin/article?offset={{ +articles.page + 1 }}"
+              aria-label="Next"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          {{/if}}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <form action="/admin/article-del" method="get" class="modal-content">
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">请确认</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- 模态框主体 -->
+      <div class="modal-body">
+        <p>您确定要删除这篇文章吗？</p>
+        <input type="hidden" name="id" id="delUserId" />
+      </div>
+
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">
+          取消
+        </button>
+        <input type="submit" class="btn btn-primary" />
+      </div>
+    </form>
+  </div>
+</div>
+{{/block}} {{block 'script'}}
+<script>
+  $(".delete").on("click", function() {
+    let id = $(this).attr("data-id");
+    $("#delUserId").val(id);
+  });
+</script>
+{{/block}}

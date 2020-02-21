@@ -1,0 +1,82 @@
+{{extend './common/layout.art'}} {{block 'link'}}
+<link rel="stylesheet" href="/admin/css/index.css" />
+{{/block}} {{block 'main'}} {{include './common/header.art'}}
+<div class="content">
+  {{include './common/aside.art'}}
+  <div class="main">
+    <div class="edt-group">
+      <form
+        action="{{link}}"
+        autocomplete="off"
+        method="POST"
+      >
+        <div class="form-group">
+          <label for="title">标题</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            placeholder="请输入文章标题"
+            id="title"
+            name="title"
+            value="{{ article && article.title }}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="author">作者</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            id="author"
+            name="author"
+            readonly
+            value="{{@ article ? article.author.username : userInfo && userInfo._id}}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="publishDate">日期</label>
+          <input
+            type="date"
+            class="form-control form-control-sm"
+            id="publishDate"
+            name="publishDate"
+          />
+        </div>
+        <div class="form-group">
+          <label for="cover">文章封面</label>
+          <input
+            type="file"
+            class="form-control-file"
+            id="cover"
+            name="cover"
+          />
+          <div class="cover-wrap">
+            <img class="cover-img" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="content">内容</label>
+          <textarea
+            class="form-control"
+            name="content"
+            id="content"
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
+        <button class="btn btn-primary">提交</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade confirm-modal"></div>
+{{/block}} {{block 'script'}}
+<script>
+  $("#cover").change(function(e) {
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = function(e) {
+      $(".cover-img").attr("src", reader.result);
+    };
+  });
+</script>
+{{/block}}
